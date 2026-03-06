@@ -1,1 +1,1 @@
-#  Sequential RISC-V Processor Design
+#  Pipelined RISC-V Processor Design
