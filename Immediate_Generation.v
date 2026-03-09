@@ -22,7 +22,7 @@ module Immediate_Generation(input[31:0] instr, output[63:0] imm);
 
             B_type:
             begin
-                imm_reg = {{52{instr[31]}},instr[31],instr[7],instr[30:25],instr[11:8]};
+                imm_reg = {{52{instr[31]}},instr[31],instr[7],instr[30:25],instr[11:8],1'b0};
             end
 
             default:
