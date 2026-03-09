@@ -16,9 +16,7 @@ module hazard_detection_unit(
             flush_reg = 1'b1;
         end
 
-
         else if (ID_EX_mem_read && ((ID_EX_rd == IF_ID_rs1) || (ID_EX_rd == IF_ID_rs2 && !(ld_sd_mem_read || ld_sd_mem_write))) && (ID_EX_rd != 5'b0)) begin
-            
             pc_write_reg = 1'b0;
             IF_ID_write_reg = 1'b0;
             control_bubble_sel_reg = 1'b1;
