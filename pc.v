@@ -1,11 +1,10 @@
-module pc(input clk,reset, input [63:0]pc_in, output [63:0]pc_out);
-    reg [63:0] pc_reg;
+module pc(input clk, reset, pc_write, input [63:0] pc_in, output [63:0] pc_out);
+    reg [63:0] pc_out_reg;
     always @(posedge clk or posedge reset) begin
-        if (reset) begin
-            pc_reg <= 64'b0;
-        end else begin
-            pc_reg <= pc_in;
-        end
-    end 
-    assign pc_out = pc_reg;
+        if (reset)
+            pc_out_reg <= 64'h0;
+        else if (pc_write)
+            pc_out_reg <= pc_in;
+    end
+    assign pc_out = pc_out_reg;
 endmodule
