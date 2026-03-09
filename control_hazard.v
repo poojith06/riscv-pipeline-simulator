@@ -1,15 +1,12 @@
-module control_hazard(input branch_zero, output reg flush_if,output reg flush_id);
-wire branch_taken; 
-assign branch_taken=1'b0;
-always @(*) begin
-    if(branch_taken == brach_zero) begin
-        flush_if = 1'b1;
-        flush_id = 1'b1;
+module control_hazard(input Branch_and_zero, output flush);
+reg flush_reg;
+    always @(*) begin
+        if (Branch_and_zero) begin
+            flush_reg = 1'b1;
+        end
+        else begin
+            flush_reg = 1'b0;
+        end
     end
-    else begin
-        flush_if = 1'b0;
-        flush_id = 1'b0;
-    end
-end
-
+    assign flush = flush_reg;
 endmodule
