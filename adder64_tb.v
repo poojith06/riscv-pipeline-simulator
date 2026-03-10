@@ -39,7 +39,7 @@ module adder64_tb;
         $dumpvars(0, adder64_tb);
 
         run_test(1, 64'd10, 64'd20, 64'd30);
-        run_test(3, 64'hFFFFFFFFFFFFFFF0, 64'd16, 64'h0);
+        run_test(2, 64'hFFFFFFFFFFFFFFF0, 64'd16, 64'h0);
 
         #20 $finish;
     end
