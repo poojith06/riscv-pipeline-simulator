@@ -347,24 +347,23 @@ endmodule
 // ============================================================
 // IF/ID Pipeline Register
 // ============================================================
-module IF_ID(input reset, clk, flush, IF_ID_write,
-             input [63:0] IF_ID_pc_in,
-             input [31:0] IF_ID_Ins_in,
-             output [63:0] IF_ID_pc_out,
-             output [31:0] IF_ID_Ins_out);
-    reg [63:0] pc_reg;
-    reg [31:0] ins_reg;
+module IF_ID(input reset,clk,flush,IF_ID_write, input[63:0] IF_ID_pc_in, input[31:0] IF_ID_Ins_in, output[63:0] IF_ID_pc_out, output[31:0] IF_ID_Ins_out);
+
+    reg [63:0] IF_ID_pc_out_reg;
+    reg [31:0] IF_ID_Ins_out_reg;
+
     always @(posedge clk) begin
-        if (reset || flush) begin
-            pc_reg  <= 64'b0;
-            ins_reg <= 32'b0;
-        end else if (IF_ID_write) begin
-            pc_reg  <= IF_ID_pc_in;
-            ins_reg <= IF_ID_Ins_in;
+        if(reset || flush) begin
+            IF_ID_pc_out_reg <= 64'b0;
+            IF_ID_Ins_out_reg <= 32'b0;
+        end
+        else if(IF_ID_write) begin
+            IF_ID_pc_out_reg <= IF_ID_pc_in;
+            IF_ID_Ins_out_reg <= IF_ID_Ins_in;
         end
     end
-    assign IF_ID_pc_out  = pc_reg;
-    assign IF_ID_Ins_out = ins_reg;
+    assign IF_ID_pc_out = IF_ID_pc_out_reg;
+    assign IF_ID_Ins_out = IF_ID_Ins_out_reg;
 endmodule
 
 // ============================================================
@@ -550,13 +549,16 @@ endmodule
 // ============================================================
 // LD-after-SD Forwarding (BONUS: MEM/WB load -> EX/MEM store)
 // ============================================================
-module ld_after_sd_forwarding(
-    input [4:0] ld_rd, sd_rs2,
-    input ld_mem_to_reg, sd_mem_write,
-    output ld_sd_sel
-);
-    assign ld_sd_sel = (ld_mem_to_reg && sd_mem_write &&
-                        (ld_rd != 5'b0) && (ld_rd == sd_rs2)) ? 1'b1 : 1'b0;
+module ld_after_sd_forwarding(input [4:0] ld_rd, sd_rs2,input ld_mem_to_reg, sd_mem_write,output ld_sd_sel);
+    reg ld_sd_sel_reg;
+    always @(*) begin
+        ld_sd_sel_reg = 1'b0;
+        if (ld_mem_to_reg && (ld_rd == sd_rs2) &&
+            (ld_rd != 5'b0) && sd_mem_write) begin
+            ld_sd_sel_reg = 1'b1;
+        end
+    end
+    assign ld_sd_sel = ld_sd_sel_reg;
 endmodule
 
 // ============================================================
