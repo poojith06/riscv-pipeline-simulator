@@ -1,38 +1,26 @@
 module MEM_WB(
-    input clk,reset,MEM_WB_mem_to_reg,MEM_WB_reg_write_en,
-    input[63:0] MEM_WB_data,MEM_WB_alu_out,
-    input[4:0] MEM_WB_rd,
-    output MEM_WB_mem_to_reg_out,MEM_WB_reg_write_en_out,
-    output[63:0] MEM_WB_data_out,MEM_WB_alu_out_out,
-    output[4:0] MEM_WB_rd_out
+    input clk, reset,
+    input  wb_mem_to_reg_in, wb_reg_write_en_in,
+    input  [63:0] wb_mem_data_in, wb_alu_out_in,
+    input  [4:0]  wb_rd_in,
+    output wb_mem_to_reg, wb_reg_write_en,
+    output [63:0] wb_mem_data, wb_alu_out,
+    output [4:0]  wb_rd
 );
-
-    reg [63:0] MEM_WB_alu_out_out_reg;
-    reg [63:0] MEM_WB_data_out_reg;
-    reg [4:0] MEM_WB_rd_out_reg;
-    reg MEM_WB_mem_to_reg_out_reg;
-    reg MEM_WB_reg_write_en_out_reg;
+    reg r_mt,r_rw;
+    reg [63:0] r_md,r_alu;
+    reg [4:0]  r_rd;
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            MEM_WB_alu_out_out_reg <= 64'b0;
-            MEM_WB_data_out_reg <= 64'b0;
-            MEM_WB_rd_out_reg <= 5'b0;
-            MEM_WB_mem_to_reg_out_reg <= 1'b0;
-            MEM_WB_reg_write_en_out_reg <= 1'b0;
+            r_mt<=0; r_rw<=0; r_md<=0; r_alu<=0; r_rd<=0;
         end else begin
-            MEM_WB_alu_out_out_reg <= MEM_WB_alu_out;
-            MEM_WB_data_out_reg <= MEM_WB_data;
-            MEM_WB_rd_out_reg <= MEM_WB_rd;
-            MEM_WB_mem_to_reg_out_reg <= MEM_WB_mem_to_reg;
-            MEM_WB_reg_write_en_out_reg <= MEM_WB_reg_write_en;
+            r_mt<=wb_mem_to_reg_in; r_rw<=wb_reg_write_en_in;
+            r_md<=wb_mem_data_in;   r_alu<=wb_alu_out_in;
+            r_rd<=wb_rd_in;
         end
     end
-
-    assign MEM_WB_alu_out_out = MEM_WB_alu_out_out_reg;
-    assign MEM_WB_data_out = MEM_WB_data_out_reg;
-    assign MEM_WB_rd_out = MEM_WB_rd_out_reg;
-    assign MEM_WB_mem_to_reg_out = MEM_WB_mem_to_reg_out_reg;
-    assign MEM_WB_reg_write_en_out = MEM_WB_reg_write_en_out_reg;
-
+    assign wb_mem_to_reg=r_mt; assign wb_reg_write_en=r_rw;
+    assign wb_mem_data=r_md;   assign wb_alu_out=r_alu;
+    assign wb_rd=r_rd;
 endmodule

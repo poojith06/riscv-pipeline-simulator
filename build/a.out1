@@ -1,14 +1,14 @@
-**** module/scope: Instruction_Memory
+**** module/scope: ld_after_sd_forwarding
      Flip-Flops   : 0
-     Logic Gates  : 192
-     ADDER[32]: 3 units
-     LPM[30]: 4 unaccounted
+     Logic Gates  : 25
+     EQUALITY[5]: 2 units
+     MUX[2]: 1 slices
      LOG[13]: 1 unaccounted
      LOG[14]: 1 unaccounted
 **** TOTALS
      Flip-Flops   : 0
-     Logic Gates  : 192
-     ADDER[32]: 3 units
-     LPM[30]: 4 unaccounted
+     Logic Gates  : 25
+     EQUALITY[5]: 2 units
+     MUX[2]: 1 slices
      LOG[13]: 1 unaccounted
      LOG[14]: 1 unaccounted
