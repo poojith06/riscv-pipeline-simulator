@@ -50,8 +50,8 @@ module Instruction_Memory(input [63:0] addr, output [31:0] instr);
     initial begin
         for (i = 0; i < 4096; i = i + 1)
             memory[i] = 8'h00;
-        // $readmemh("instructions.txt", memory);
-        $readmemh("../instructions.txt", memory);
+        $readmemh("instructions.txt", memory);
+        // $readmemh("../instructions.txt", memory);
     end
     assign instr = {memory[addr[11:0]], memory[addr[11:0]+1],
                     memory[addr[11:0]+2], memory[addr[11:0]+3]};
