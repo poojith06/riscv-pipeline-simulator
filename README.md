@@ -264,42 +264,6 @@ riscv-pipeline-simulator/
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- [iVerilog](http://iverilog.icarus.com/) (Icarus Verilog)
-- Any terminal / command prompt
-
-### Running the Full Processor Simulation
-
-```bash
-# Compile
-iverilog -o pipe_sim pipe_tb.v
-
-# Run
-vvp pipe_sim
-```
-
-> `pipe_tb.v` includes `pipe.v` directly via `` `include ``, which contains all modules — no separate files need to be listed.
-
-### Running Individual Module Testbenches
-
-```bash
-# Example: Hazard Detection Unit
-iverilog -o hdu_sim modules_tb/hazard_detection_tb.v modules/hazard_detection.v
-vvp hdu_sim
-
-# Example: Forwarding Unit
-iverilog -o fwd_sim modules_tb/forwarding_unit_tb.v modules/forwarding_unit.v
-vvp fwd_sim
-```
-
-### Changing the Input Program
-
-Edit `instructions.txt` with your RISC-V machine code (one byte per line, in hexadecimal). An expected output can be placed in `instructions_exp.txt` for comparison. The simulation automatically stops when it detects a `0x00000000` instruction (end-of-program sentinel) and dumps results to `register_file.txt`.
-
----
 
 ## Testing & Results
 
