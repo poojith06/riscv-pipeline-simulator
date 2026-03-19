@@ -2,6 +2,14 @@
 
 A 5-stage pipelined RISC-V processor implemented in Verilog, based on the RV64I instruction set architecture, featuring a Hazard Detection Unit, Data Forwarding Unit, and a 2-bit Branch History Table (BHT).
 
+## Key Features
+- 5-stage pipelined RV64I processor (IF, ID, EX, MEM, WB)
+- Full hazard handling: forwarding, load-use stalls, branch flush
+- **Dynamic branch prediction using a 2-bit saturating counter BHT (16 entries)**
+- Special ld-after-sd forwarding path
+- Fully modular Verilog design with unit testbenches for each module
+- Verified using loop-heavy Fibonacci benchmark
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -89,9 +97,16 @@ Branches are resolved at the end of the EX stage. When a branch is taken, the tw
 
 A bonus forwarding path handles the case where a `sd` instruction immediately follows a `ld` that writes to the same register as the store data source. The loaded value from the MEM/WB stage is forwarded directly to the Data Memory write port via a mux.
 
-### 2-bit Branch History Table (BHT)
+<!-- ### 2-bit Branch History Table (BHT)
 
-A 16-entry 2-bit saturating counter BHT is included in the Hazard Detection Unit, indexed by bits `[5:2]` of the branch PC. Records branch outcomes each cycle; the `predicted_taken` output is available for future integration into a full branch predictor.
+A 16-entry 2-bit saturating counter BHT is included in the Hazard Detection Unit, indexed by bits `[5:2]` of the branch PC. Records branch outcomes each cycle; the `predicted_taken` output is available for future integration into a full branch predictor. -->
+
+
+### Dynamic Branch Prediction (2-bit BHT)
+A 16-entry Branch History Table (BHT) using 2-bit saturating counters is implemented and indexed using PC[5:2].
+- Predicts branch direction based on past behavior
+- Updated on every branch resolution
+- Reduces control hazard penalties in loop-heavy workloads
 
 ---
 
