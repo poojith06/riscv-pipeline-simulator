@@ -308,4 +308,4 @@ A 5-stage pipelined RISC-V processor (RV64I) was successfully designed, implemen
 
 ---
 
-> **Related Project:** [RISC-V Sequential Simulator](https://github.com/aneesh0424/riscv-sequential-simulator) — the non-pipelined single-cycle version of this processor.
+> **Related Project:** [RISC-V Sequential Simulator](https://github.com/poojith06/riscv-sequential-simulator) — the non-pipelined single-cycle version of this processor.
